@@ -1,0 +1,7 @@
+{
+	"bind_host" : "0.0.0.0",
+	"port" : 5140,
+	"mongo_host" : "localhost",
+	"mongo_port" : 27017,
+	"delay" : 60
+}
