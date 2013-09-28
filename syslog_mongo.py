@@ -12,7 +12,7 @@ from pymongo import MongoClient
 CONFIG_FILE = 'config.json'
 config = {}
 
-def load_config(delay):
+def load_config(delay=0):
 	global config
 	now = time.time()
 
@@ -23,7 +23,7 @@ def load_config(delay):
 		config['updated'] = now
 		print config
 		
-load_config(0)
+load_config()
 
 client = MongoClient(config['mongo_host'], config['mongo_port'])
 
