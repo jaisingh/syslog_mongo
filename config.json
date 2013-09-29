@@ -3,5 +3,14 @@
 	"port" : 5140,
 	"mongo_host" : "localhost",
 	"mongo_port" : 27017,
-	"delay" : 60
+	"delay" : 60,
+	"filters" : [
+		{
+			"id" : "default",
+			"regex" : "/*/",
+			"script" : "scripts/default.py",
+			"db" : "test",
+			"table" : "logs"
+		}
+	]
 }

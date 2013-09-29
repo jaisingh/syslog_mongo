@@ -6,6 +6,7 @@ import SocketServer
 import time
 import json
 import pymongo
+import new
 
 from pymongo import MongoClient
 
@@ -24,6 +25,14 @@ def load_config(delay=0):
 		print config
 		
 load_config()
+
+def import_code(code, name, add_to_sys_modules=False):
+	 module = new.module(name)
+	 if add_to_sys_modules:
+			import sys
+			sys.modules[name] = module
+	 exec code in module.__dict__
+	 return module
 
 client = MongoClient(config['mongo_host'], config['mongo_port'])
 
