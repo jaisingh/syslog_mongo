@@ -62,7 +62,7 @@ class SyslogUDPHandler(SocketServer.BaseRequestHandler):
 		print output
 		db = client.test
 		logs = db.logs
-		log_id = logs.insert(output)
+		log_id = logs.insert(output['data'])
 		print "Added log to db : {0}".format(log_id)
 
 
