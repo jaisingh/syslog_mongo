@@ -7,6 +7,7 @@ import time
 import json
 import pymongo
 import new
+import re
 
 from pymongo import MongoClient
 
@@ -27,12 +28,13 @@ def load_config(delay=0):
 load_config()
 
 def import_code(code, name, add_to_sys_modules=False):
-	 module = new.module(name)
-	 if add_to_sys_modules:
-			import sys
-			sys.modules[name] = module
-	 exec code in module.__dict__
-	 return module
+	name = name.encode('ascii')
+	module = new.module(name)
+	if add_to_sys_modules:
+		import sys
+		sys.modules[name] = module
+	exec code in module.__dict__
+	return module
 
 client = MongoClient(config['mongo_host'], config['mongo_port'])
 
@@ -40,10 +42,15 @@ class SyslogUDPHandler(SocketServer.BaseRequestHandler):
 		
 	
 	def generate_output(self, data):
-		output = {
-		'data' : data
-		}
-		
+		output = {}
+		# need code for multi match here
+		for filter in config['filters']:
+			match = re.search(filter['regex'], data)
+			if match:
+				# This should probably be cached eventually
+				script = import_code(open(filter['script']),filter['id'])
+				output['data'] = script.process(match,data)
+				output['filter'] = filter
 		return output
 
 	def handle(self):

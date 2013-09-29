@@ -7,8 +7,8 @@
 	"filters" : [
 		{
 			"id" : "default",
-			"regex" : "/*/",
-			"script" : "scripts/default.py",
+			"regex" : "(.*)",
+			"script" : "filters/default.py",
 			"db" : "test",
 			"table" : "logs"
 		}

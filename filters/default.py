@@ -1,4 +1,7 @@
 
-def process(x):
-	print "in function x = {0}".format(x)
-	return x
+def process(match, data):
+	print "in function match = {0}".format(match.groups())
+	
+	output = {}
+	output['data'] = data
+	return output
